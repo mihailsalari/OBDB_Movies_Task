@@ -2,7 +2,7 @@ import UIKit
 
 protocol MoviesPresenterProtocol {
     func present()
-    func didSelect(movieId: String?, posterData: Data?)
+    func didSelect(viewModel: MoviesViewModel)
 }
 
 class MoviesPresenter: MoviesPresenterProtocol {
@@ -13,7 +13,7 @@ class MoviesPresenter: MoviesPresenterProtocol {
     
     private let moviesService: MoviesServiceProtocol
     private let imageDownloaderManager: ImageDownloaderManagerProtocol
-    
+
     init(view: MoviesViewControllerProtocol & UIViewController, moviesService: MoviesServiceProtocol,
          imageDownloaderManager: ImageDownloaderManagerProtocol) {
         self.view = view
@@ -31,59 +31,60 @@ class MoviesPresenter: MoviesPresenterProtocol {
         moviesService.getMovies(with: Constants.apiBaseURL, parameters: parameters) { [weak self] (result: Result<MovieResult, Error>) in
             switch result {
             case .success(let movies):
-                let viewModel = MoviesViewModel(movieResult: movies)
+                let viewModels = movies.search.compactMap { MoviesViewModel(with: $0) }
                 DispatchQueue.main.async {
-                    self?.view.prepare(with: viewModel)
-                    self?.downloadPostersImages(for: viewModel)
+                    self?.view.prepare(with: viewModels)
+                    self?.downloadPostersImages(for: viewModels)
                 }
             case .failure(let failure):
                 print(failure)
             }
         }
     }
-    
-    private func downloadPostersImages(for moviesViewModel: MoviesViewModel) {
+
+    private func downloadPostersImages(for viewModels: [MoviesViewModel]) {
         view.showLoading(with: "Loading...")
-        let searchResults = moviesViewModel.movieResult.search
         
         let dispatchGroup = DispatchGroup()
         
-        var updatedSearchResults: [MovieSearch] = []
+        var updatedViewModels: [MoviesViewModel] = []
         
-        for item in searchResults {
+        for viewModel in viewModels {
             dispatchGroup.enter()
             
-            imageDownloaderManager.downloadImage(for: item.poster) { [weak self] result in
+            imageDownloaderManager.downloadImage(for: viewModel.imageURLString) { [weak self] result in
                 switch result {
                 case .success(let imageData):
-                    let searchResult = MovieSearch(title: item.title, year: item.year,
-                                                   imdbID: item.imdbID, type: item.type,
-                                                   poster: item.poster, posterImage: imageData)
-                    updatedSearchResults.append(searchResult)
+                    self?.downloadMovieDetails(movieId: viewModel.id) { detailsResult in
+                        switch detailsResult {
+                        case .success(let details):
+                            var tmpViewModel = viewModel
+                            tmpViewModel.details = details
+                            tmpViewModel.duration = details.runtime
+                            tmpViewModel.posterData = imageData
+                            tmpViewModel.rating = details.ratings.first?.value ?? "\(details.imdbRating)/10.0"
+                            
+                            updatedViewModels.append(tmpViewModel)
+                        case .failure(let failure):
+                            print("Cannot download details, failed: \(failure.localizedDescription)")
+                        }
+                        
+                        dispatchGroup.leave()
+                    }
                 case .failure(let error):
                     print("Image download failed: \(error)")
-                    self?.view.hideLoading()
+                    dispatchGroup.leave()
                 }
-                
-                dispatchGroup.leave()
             }
         }
         
         dispatchGroup.notify(queue: .main) { [weak self] in
-            var updatedMoviesViewModel = moviesViewModel
-            updatedMoviesViewModel.movieResult.search = updatedSearchResults
-            
             self?.view.hideLoading()
-            // Update the view with the updated view model and downloaded images
-            self?.view.prepare(with: updatedMoviesViewModel)
+            self?.view.prepare(with: updatedViewModels)
         }
     }
-    
-    func didSelect(movieId: String?, posterData: Data?) {
-        guard let movieId = movieId, !movieId.isEmpty, let posterData = posterData else { return }
-        
-        view.navigationController?.showLoading(with: "Loading...")
 
+    private func downloadMovieDetails(movieId: String, completion: @escaping (Result<MovieDetail, Error>) -> Void) {
         let parameters: [String: Any] = [
             "i": movieId,
             "plot": "full",
@@ -91,19 +92,14 @@ class MoviesPresenter: MoviesPresenterProtocol {
         ]
         
         // https://www.omdbapi.com/?i=tt0372784&plot=full&apikey=86c4b2d9
-        moviesService.getMovieDetail(with: Constants.apiBaseURL, parameters: parameters) { [weak self] (result: Result<MovieDetail, Error>) in
-            switch result {
-            case .success(let detail):
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self?.view.hideLoading()
-                    self?.navigateToDetail(with: detail, posterData: posterData)
-                }
-            case .failure(let failure):
-                print(failure)
-                self?.view.hideLoading()
-            }
-        }
+        moviesService.getMovieDetail(with: Constants.apiBaseURL, parameters: parameters, completion: completion)
     }
+    
+    func didSelect(viewModel: MoviesViewModel) {
+        guard let details = viewModel.details, let posterData = viewModel.posterData else { return }
+        navigateToDetail(with: details, posterData: posterData)
+    }
+    
     
     private func navigateToDetail(with detail: MovieDetail, posterData: Data) {
         let controller = MovieDetailBuilder().buildViewController(with: detail, posterData: posterData)!

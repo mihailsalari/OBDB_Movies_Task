@@ -1,12 +1,12 @@
 import UIKit
 
 protocol MoviesViewControllerProtocol: AnyObject {
-    func prepare(with viewModel: MoviesViewModel)
+    func prepare(with viewModels: [MoviesViewModel])
 }
 
 final class MoviesViewController: UITableViewController, MoviesViewControllerProtocol {
     var presenter: MoviesPresenterProtocol!
-    private var viewModel: MoviesViewModel?
+    private var viewModels: [MoviesViewModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +22,8 @@ final class MoviesViewController: UITableViewController, MoviesViewControllerPro
         view.backgroundColor = .black
     }
     
-    func prepare(with viewModel: MoviesViewModel) {
-        self.viewModel = viewModel
+    func prepare(with viewModels: [MoviesViewModel]) {
+        self.viewModels = viewModels
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -33,7 +33,7 @@ final class MoviesViewController: UITableViewController, MoviesViewControllerPro
 
 extension MoviesViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel?.movieResult.search.count ?? 0
+        viewModels.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -41,17 +41,17 @@ extension MoviesViewController {
             return UITableViewCell()
         }
         
-        if let search = viewModel?.movieResult.search[indexPath.row] {
-            cell.configure(with: search)
-        }
+        cell.configure(with: viewModels[indexPath.row])
         return cell
     }
 }
 
 extension MoviesViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movieId = viewModel?.movieResult.search[indexPath.row].imdbID
-        let posterData = viewModel?.movieResult.search[indexPath.row].posterImage
-        presenter.didSelect(movieId: movieId, posterData: posterData)
+        presenter.didSelect(viewModel: viewModels[indexPath.row])
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 220.0
     }
 }

@@ -3,4 +3,70 @@
    uuid = "420E0194-4167-4119-BCF2-0C5D883B9A54"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1711FA89-077F-4D3C-ABD5-5BA651503E4D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OMDBAPITest/Common/LoadingView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "showLoading(with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1711FA89-077F-4D3C-ABD5-5BA651503E4D - f169a761925c89be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIViewController.showLoading(with: Swift.String) -&gt; ()"
+                  moduleName = "OMDBAPITest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/msalari/Desktop/OMDBAPITest/OMDBAPITest/Common/LoadingView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "88"
+                  endingLineNumber = "88"
+                  offsetFromSymbolStart = "700">
+               </Location>
+               <Location
+                  uuid = "1711FA89-077F-4D3C-ABD5-5BA651503E4D - f169a761925c899d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIViewController.showLoading(with: Swift.String) -&gt; ()"
+                  moduleName = "OMDBAPITest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/msalari/Desktop/OMDBAPITest/OMDBAPITest/Common/LoadingView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "700">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F834EC79-7898-4A3F-9019-8863A7828151"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OMDBAPITest/Modules/Movies/View/MoviesTableViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "configure(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

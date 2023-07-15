@@ -18,14 +18,11 @@ struct MovieResult: Codable {
     }
 }
 
-// MARK: - Search
 struct MovieSearch: Codable {
     let title, year, imdbID: String
     let type: MovieType
     let poster: String
-
-    var posterImage: Data?
-    
+        
     enum CodingKeys: String, CodingKey {
         case title = "Title"
         case year = "Year"

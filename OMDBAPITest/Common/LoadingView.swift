@@ -43,7 +43,8 @@ final class LoadingView: UIView {
         addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
         // Spinner view
@@ -83,23 +84,26 @@ extension UIViewController {
     
     func showLoading(with title: String) {
         // Check if the loading view is already displayed
-        if view.subviews.first(where: { $0.accessibilityIdentifier == "loadingView"}) as? LoadingView != nil {
+        if let loadingView = view.subviews.first(where: { $0.accessibilityIdentifier == "loadingView"}) as? LoadingView {
+            UIViewController.loadingView = loadingView
             return
         }
         
         let loadingView = LoadingView(title: title)
         UIViewController.loadingView = loadingView
         loadingView.accessibilityIdentifier = "loadingView"
-        view.addSubview(loadingView)
-        loadingView.show(in: view)
+        let view = navigationController?.view ?? view
+        view?.addSubview(loadingView)
+
+        loadingView.show(in: view!)
         
         loadingView.translatesAutoresizingMaskIntoConstraints = false
-        
+                
         NSLayoutConstraint.activate([
-            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
-            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            loadingView.leadingAnchor.constraint(equalTo: view!.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view!.trailingAnchor),
+            loadingView.topAnchor.constraint(equalTo: view!.topAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view!.bottomAnchor)
         ])
     }
     
