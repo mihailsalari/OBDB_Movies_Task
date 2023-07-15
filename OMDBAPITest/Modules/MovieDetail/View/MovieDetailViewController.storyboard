@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dX1-gU-zbF">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Movie Detail View Controller-->
+        <scene sceneID="dra-g5-ihr">
+            <objects>
+                <viewController storyboardIdentifier="MovieDetailViewController" id="dX1-gU-zbF" customClass="MovieDetailViewController" customModule="OMDBAPITest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hUO-P9-Ao9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZBz-7z-byb">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="537.5"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9NY-Kd-f2o">
+                                <rect key="frame" x="186" y="537.5" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="end-nL-KbR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0cK-7s-6qM" customClass="GradientView" customModule="OMDBAPITest" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="465.5" width="414" height="430.5"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="h4C-6N-HC5">
+                                        <rect key="frame" x="12" y="12" width="390" height="387"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="h4C-6N-HC5" firstAttribute="leading" secondItem="0cK-7s-6qM" secondAttribute="leading" constant="12" id="3Bb-48-gmh"/>
+                                    <constraint firstItem="h4C-6N-HC5" firstAttribute="top" secondItem="0cK-7s-6qM" secondAttribute="top" constant="12" id="44B-29-qnq"/>
+                                    <constraint firstAttribute="trailing" secondItem="h4C-6N-HC5" secondAttribute="trailing" constant="12" id="9SD-um-Y2p"/>
+                                    <constraint firstAttribute="bottom" secondItem="h4C-6N-HC5" secondAttribute="bottom" constant="31.5" id="NpQ-7Z-z6u"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="fDP-H1-3cl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="0cK-7s-6qM" firstAttribute="trailing" secondItem="fDP-H1-3cl" secondAttribute="trailing" id="A6K-Fy-EM9"/>
+                            <constraint firstItem="ZBz-7z-byb" firstAttribute="leading" secondItem="fDP-H1-3cl" secondAttribute="leading" id="DUv-1B-AEv"/>
+                            <constraint firstItem="9NY-Kd-f2o" firstAttribute="top" secondItem="ZBz-7z-byb" secondAttribute="bottom" id="I7m-KW-MGA"/>
+                            <constraint firstItem="9NY-Kd-f2o" firstAttribute="centerY" secondItem="hUO-P9-Ao9" secondAttribute="centerY" constant="100" id="ZKI-Iu-dzN"/>
+                            <constraint firstItem="0cK-7s-6qM" firstAttribute="leading" secondItem="fDP-H1-3cl" secondAttribute="leading" id="apK-SX-B3N"/>
+                            <constraint firstItem="9NY-Kd-f2o" firstAttribute="centerX" secondItem="hUO-P9-Ao9" secondAttribute="centerX" id="c3i-Dq-QRq"/>
+                            <constraint firstAttribute="bottom" secondItem="0cK-7s-6qM" secondAttribute="bottom" id="caw-Dq-ybq"/>
+                            <constraint firstItem="ZBz-7z-byb" firstAttribute="trailing" secondItem="fDP-H1-3cl" secondAttribute="trailing" id="epk-sj-9sO"/>
+                            <constraint firstItem="0cK-7s-6qM" firstAttribute="firstBaseline" secondItem="9NY-Kd-f2o" secondAttribute="firstBaseline" constant="-88" id="psN-7Q-m6T"/>
+                            <constraint firstItem="ZBz-7z-byb" firstAttribute="top" secondItem="hUO-P9-Ao9" secondAttribute="top" id="usK-od-7Bh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="detailTextView" destination="h4C-6N-HC5" id="37m-P0-Vo9"/>
+                        <outlet property="gradientView" destination="0cK-7s-6qM" id="qQV-QU-caI"/>
+                        <outlet property="imageView" destination="ZBz-7z-byb" id="yzo-fq-Iso"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CMe-PD-Ivs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="773.91304347826087" y="137.94642857142856"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
